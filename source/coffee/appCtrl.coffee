@@ -4,7 +4,7 @@ angular.module 'app'
     vm.data = []
     vm.sort = 'Nopower'
     vm.zipNames = ks
-    vm.kind= "park"
+    vm.kind= "area"
     vm.typeChange = (types) ->
       if types == "NoWater"
         vm.type = "NoWater"

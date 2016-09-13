@@ -78,13 +78,13 @@
 
             </div>
           </div>
-          <div  ng-show="app.kind=='park'"  class="m-t-2">
-            <label for="sort">停車地區</label>
+          <div class="park"  ng-show="app.kind=='park'"  >
+          <div class="m-t-2"></div>  
                   <select id="sort" class="form-control" name=""  
                     
                      ng-options="item.name for item in app.zipNames"
                     ng-model="app.zipnamePark">
-                    <option value="">--請選擇區域--</option>
+                    <option value="">--選擇停車區域--</option>
 
                   </select>
               <div class="m-t-2"></div>
@@ -95,13 +95,20 @@
 
                     <div class="text-muted">
                        
-                      <i class="fa fa-map-marker" aria-hidden="true"></i><span ng-bind="item.area" class="tag tag-primary"></span>
+                      <span ng-bind="item.area" class="tag tag-primary"></span>
                       <span ng-bind="item.name"></span>
                     </div>
-                    <p class="card-text"><span ng-bind="item.area"></span><span ng-bind="item.location"></span></p>
-                    
-                  </div>
-
+                    <p class="card-text"><i class="fa fa-map-marker" aria-hidden="true"></i>地址：<span ng-bind="item.area"></span><span ng-bind="item.location"></span><br>
+                    <i class="fa fa-car" aria-hidden="true"></i>車位：<span ng-bind="item.number"></span>
+                      
+                    </p>
+                 
+                  <div class="card-text">
+                   
+                    <a  href="{{'tel:07'+item.tel}}" class="btn btn-primary">電話聯絡</a>
+                    <a target="_blank" href="{{'https://www.google.com.tw/maps/place/高雄市'+item.area+item.location}}" class="btn btn-primary">連到地圖</a>
+                    </div>
+                   </div>
                 </div>
               </div>
           </div>
