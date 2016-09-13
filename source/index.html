@@ -9,59 +9,109 @@
   <script src="javascripts/vendor.js"></script>
   <script src="javascripts/all.js"></script>
 </head>
-<body>
-  <nav class="navbar navbar-light bg-faded">
-    <a class="navbar-brand" href="/">高雄防災通 - 提供即時停電、停水、淹水資訊</a>
+<body ng-controller="appCtrl as app">
+  <nav class="navbar navbar-light bg-faded header">
+    <a class="navbar-brand" href="/">高雄防災通-提供即時停電、停水、淹水資訊</a>
     <ul class="nav navbar-nav pull-right">
       <li class="nav-item active">
         <a class="nav-link hidden-xs-down" target="_blank" href="http://data.kcg.gov.tw/dataset/open1999">資料出處：data.kcg.gov.tw</a>
       </li>
     </ul>
   </nav>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link" ng-class="{'active': app.kind=='area'}" ng-click="app.kind='area'" data-toggle="tab" href="#home" role="tab">災害查詢</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" ng-class="{'active': app.kind=='park'}"  ng-click="app.kind='park'" data-toggle="tab" href="#park" role="tab">緊急臨時停車場</a>
+          </li>
 
-  <div class="container-fluid m-t-2" ng-controller="appCtrl as app">
-    <div class="m-b-3 row">
-      <div class="col-sm-4">
-        <label for="sort">災害類型</label>
-        <select id="sort" class="form-control" name=""  ng-model="app.typeNow"
-           ng-init="app.typeNow = app.type[0]"
-           ng-options="v for v  in app.type">
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <div ng-show="app.kind=='area'" class="tab-pane active"  role="tabpanel">
+            <div class="container-fluid m-t-2" >
+              <div class="m-b-3 row">
+                <div class="col-sm-4">
+                  <label for="sort">災害類型</label>
+                  <select id="sort" class="form-control" name=""  ng-model="app.typeNow"
+                     ng-init="app.typeNow = app.type[0]"
+                     ng-options="v for v  in app.type">
 
 
-        </select>
-      </div>
-      <div class="col-sm-4">
-        <label for="sort">地區</label>
-        <select id="sort" class="form-control" name=""
-          ng-options="item.name for item in app.zipNames"
-          ng-model="app.zipname">
-          <option value="">-- 選擇地區 --</option>
-        </select>
-      </div>
-    </div>
+                  </select>
+                </div>
+                <div class="col-sm-4">
+                  <label for="sort">地區</label>
+                  <select id="sort" class="form-control" name=""
+                    ng-options="item.name for item in app.zipNames"
+                    ng-model="app.zipname">
+                    <option value="">-- 選擇地區 --</option>
+                  </select>
+                </div>
+              </div>
 
-    <div class="card-columns">
-      <div class="card" ng-repeat="(key, item) in app.data | filter: app.zipname.name | filter:app.typeNow"
-        >
-        <div class="card-block">
+              <div class="card-columns">
+                <div class="card" ng-repeat="(key, item) in app.data | filter: app.zipname.name | filter:app.typeNow"
+                  >
+                  <div class="card-block">
 
-          <div class="text-muted">
-             <i class="fa"  aria-hidden="true" ng-class="{'fa-plug': item.InformDesc_=='停電', 'fa-tint':  item.InformDesc_=='暴雨積水(一)'||item.InformDesc_=='暴雨積水(二)'||item.InformDesc_=='停水'}"></i>
-            <span ng-bind="item.ZipName_" class="tag tag-primary"></span>
+                    <div class="text-muted">
+                       <i class="fa"  aria-hidden="true" ng-class="{'fa-plug': item.InformDesc_=='停電', 'fa-tint':  item.InformDesc_=='暴雨積水(一)'||item.InformDesc_=='暴雨積水(二)'||item.InformDesc_=='停水'}"></i>
+                      <span ng-bind="item.ZipName_" class="tag tag-primary"></span>
 
-            <span ng-bind="item.address_"></span>
+                      <span ng-bind="item.address_"></span>
+                    </div>
+                    <p class="card-text"><span ng-bind="item.BeforeDesc_"></span></p>
+                    <div class="card-text">
+                      <small class="text-muted" ng-bind="'通報日期：' + item.Save_Date_">
+                      </small>
+                    </div>
+
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
           </div>
-          <p class="card-text"><span ng-bind="item.BeforeDesc_"></span></p>
-          <div class="card-text">
-            <small class="text-muted" ng-bind="'通報日期：' + item.Save_Date_">
-            </small>
-          </div>
+          <div  ng-show="app.kind=='park'"  class="m-t-2">
+            <label for="sort">停車地區</label>
+                  <select id="sort" class="form-control" name=""  
+                    
+                     ng-options="item.name for item in app.zipNames"
+                    ng-model="app.zipnamePark">
+                    <option value="">--請選擇區域--</option>
 
+                  </select>
+              <div class="m-t-2"></div>
+              <div class="card-columns">
+                <div class="card" ng-repeat="(key, item) in app.park | filter: app.zipnamePark.name"
+                  >
+                  <div class="card-block">
+
+                    <div class="text-muted">
+                       
+                      <i class="fa fa-map-marker" aria-hidden="true"></i><span ng-bind="item.area" class="tag tag-primary"></span>
+                      <span ng-bind="item.name"></span>
+                    </div>
+                    <p class="card-text"><span ng-bind="item.area"></span><span ng-bind="item.location"></span></p>
+                    
+                  </div>
+
+                </div>
+              </div>
+          </div>
         </div>
-
       </div>
     </div>
-
   </div>
+  
+  
+  
+  
 </body>
 </html>
