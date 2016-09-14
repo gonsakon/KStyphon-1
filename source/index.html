@@ -40,7 +40,7 @@
         <!-- Tab panes -->
         <div class="tab-content">
           <div ng-show="app.kind=='area'" class="tab-pane active"  role="tabpanel">
-            <div class="container-fluid m-t-2" >
+            <div class="m-t-2" >
               <div class="m-b-3 row">
                 <div class="col-sm-4">
                   <label for="sort">災害類型</label>
@@ -59,8 +59,12 @@
                 </div>
               </div>
 
+              <div class="alert alert-success text-xs-center" ng-if="!app.items.length">
+                「您目前搜尋地區無任何災害」
+              </div>
+
               <div class="card-columns">
-                <div class="card" ng-repeat="(key, item) in app.data | filter: app.zipname.name | filter:app.typeNow">
+                <div class="card" ng-repeat="(key, item) in app.items = (app.data | filter: app.zipname.name | filter:app.typeNow)">
                   <div class="card-block">
                     <div class="text-muted">
                        <i class="fa"  aria-hidden="true" ng-class="{'fa-plug': item.InformDesc_=='停電', 'fa-tint':  item.InformDesc_=='暴雨積水(一)'||item.InformDesc_=='暴雨積水(二)'||item.InformDesc_=='停水'}"></i>
