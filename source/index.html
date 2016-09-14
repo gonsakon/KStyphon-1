@@ -52,7 +52,7 @@
                 <div class="col-sm-4">
                   <label for="sort">地區</label>
                   <select id="sort" class="form-control" name=""
-                    ng-options="item.name for item in app.zipNames"
+                    ng-options="item as (item.name + ' ['+ (app.data | filter: item.name).length +']') for item in app.zipNames"
                     ng-model="app.zipname">
                     <option value="">-- 全地區 --</option>
                   </select>
