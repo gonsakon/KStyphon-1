@@ -46,7 +46,7 @@
                   <label for="sort">災害類型</label>
                   <select id="sort" class="form-control" name=""  ng-model="app.typeNow"
                      ng-init="app.typeNow = app.type[0]"
-                     ng-options="v for v  in app.type">
+                     ng-options="v as (v + ' ['+ (app.data | filter: v).length +']') for v  in app.type">
                   </select>
                 </div>
                 <div class="col-sm-4">
